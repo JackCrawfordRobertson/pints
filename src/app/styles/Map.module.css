@@ -1,0 +1,7 @@
+.custom-marker {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+}

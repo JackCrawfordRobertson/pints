@@ -1,0 +1,27 @@
+{
+  "name": "pints",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.2",
+    "@mui/icons-material": "^5.16.5",
+    "@mui/material": "^5.16.5",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "firebase": "^10.12.4",
+    "geolib": "^3.3.4",
+    "mapbox-gl": "^3.5.2",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5"
+  }
+}
