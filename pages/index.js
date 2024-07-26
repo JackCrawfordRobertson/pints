@@ -83,10 +83,10 @@ const Home = () => {
 
       console.log(`Distance to pub "${pub.pub_name || 'Unnamed pub'}" (${pub.latitude}, ${pub.longitude}): ${distance} meters`);
 
-      return distance <= 10000; // Adjusted distance for testing
+      return distance <= 4000; // Adjusted distance for testing
     });
 
-    console.log("Nearby pubs within 10km:", nearbyPubs);
+    console.log("Nearby pubs within 4km:", nearbyPubs);
 
     nearbyPubs.sort((a, b) => parseFloat(a.pint_price.replace('£', '')) - parseFloat(b.pint_price.replace('£', '')));
 
