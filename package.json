@@ -14,6 +14,8 @@
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "@mui/icons-material": "^5.16.5",
     "@mui/material": "^5.16.5",
+    "@ramonak/react-progress-bar": "^5.2.0",
+    "@types/react-slick": "^0.23.13",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -26,7 +28,11 @@
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-progress-bar": "^0.1.0",
+    "react-slick": "^0.30.2",
     "react-swipeable": "^7.0.1",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "react-topbar-progress-indicator": "^4.1.1",
+    "slick-carousel": "^1.8.1"
   }
 }
