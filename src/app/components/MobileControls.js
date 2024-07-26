@@ -12,8 +12,8 @@ const MobileContainer = styled(Box)(({ isFading }) => ({
   flexDirection: 'column',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 139, 0.7)', // Higher opacity dark blue
-  color: '#fff',
+  backgroundColor: '#f7fbfc', // Higher opacity dark blue
+  color: '#000',
   padding: '20px',
   zIndex: 1000,
   transition: 'opacity 0.5s ease-out',
