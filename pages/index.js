@@ -5,18 +5,28 @@ import Map from '../src/app/components/Map';
 import FloatingControls from '../src/app/components/FloatingControls';
 import MobileControls from '../src/app/components/MobileControls';
 import { getDistance } from 'geolib';
-import useWindowSize from '../hooks/useWindowSize';
+
+const centralLondonBounds = {
+  north: 51.532,
+  south: 51.477,
+  west: -0.143,
+  east: -0.01
+};
+
+const isWithinCentralLondon = (latitude, longitude) => {
+  return (
+    latitude <= centralLondonBounds.north &&
+    latitude >= centralLondonBounds.south &&
+    longitude >= centralLondonBounds.west &&
+    longitude <= centralLondonBounds.east
+  );
+};
 
 const Home = () => {
   const [location, setLocation] = useState(null);
   const [pubs, setPubs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMobileView, setIsMobileView] = useState(false);
-  const size = useWindowSize();
-
-  useEffect(() => {
-    setIsMobileView(size.width <= 768);
-  }, [size]);
+  const [isInCentralLondon, setIsInCentralLondon] = useState(true);
 
   useEffect(() => {
     const requestLocation = () => {
@@ -32,6 +42,10 @@ const Home = () => {
             setLocation(userLocation);
             console.log("User location obtained:", userLocation);
             setIsLoading(false);
+
+            if (!isWithinCentralLondon(userLocation.latitude, userLocation.longitude)) {
+              setIsInCentralLondon(false);
+            }
           },
           (error) => {
             console.error("Error obtaining location:", error);
@@ -57,53 +71,45 @@ const Home = () => {
   const fetchPubs = async () => {
     if (!location) return;
 
-    console.log("Fetching pubs from Firestore...");
-
     const pubsCollection = collection(firestore, 'pubs');
     const pubsSnapshot = await getDocs(pubsCollection);
     const pubsData = pubsSnapshot.docs.map(doc => doc.data());
 
-    console.log("Pubs data from Firestore:", pubsData);
-
-    const validPubsData = pubsData.filter(pub => {
-      const isValid = typeof pub.latitude === 'number' && typeof pub.longitude === 'number';
-      if (!isValid) {
-        console.warn("Invalid pub data (missing latitude or longitude):", pub);
+    const nearbyPubs = pubsData.filter(pub => {
+      if (typeof pub.latitude !== 'number' || typeof pub.longitude !== 'number') {
+        console.warn("Pub missing valid latitude or longitude", pub);
+        return false;
       }
-      return isValid;
-    });
 
-    console.log("Valid pubs data:", validPubsData);
+      if (typeof location.latitude !== 'number' || typeof location.longitude !== 'number') {
+        console.warn("Location missing valid latitude or longitude", location);
+        return false;
+      }
 
-    const nearbyPubs = validPubsData.filter(pub => {
       const distance = getDistance(
         { latitude: location.latitude, longitude: location.longitude },
         { latitude: pub.latitude, longitude: pub.longitude }
       );
-
-      console.log(`Distance to pub "${pub.pub_name || 'Unnamed pub'}" (${pub.latitude}, ${pub.longitude}): ${distance} meters`);
-
-      return distance <= 4000; // Adjusted distance for testing
+      return distance <= 3000;
     });
 
-    console.log("Nearby pubs within 4km:", nearbyPubs);
-
     nearbyPubs.sort((a, b) => parseFloat(a.pint_price.replace('£', '')) - parseFloat(b.pint_price.replace('£', '')));
-
-    console.log("Sorted nearby pubs by price:", nearbyPubs);
-
     setPubs(nearbyPubs.slice(0, 3));
-    console.log("Final nearby pubs:", nearbyPubs.slice(0, 3));
   };
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      {isMobileView ? (
-        <MobileControls fetchPubs={fetchPubs} />
+      {isInCentralLondon ? (
+        <>
+          <FloatingControls fetchPubs={fetchPubs} isLoading={isLoading} />
+          <Map pubs={pubs} location={location} />
+        </>
       ) : (
-        <FloatingControls fetchPubs={fetchPubs} isLoading={isLoading} />
+        <MobileControls
+          message="Sorry, we are not in your area yet."
+          onButtonClick={() => setIsInCentralLondon(true)}
+        />
       )}
-      <Map pubs={pubs} location={location} />
     </div>
   );
 };
