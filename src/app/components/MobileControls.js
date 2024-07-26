@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalBarIcon from "@mui/icons-material/LocalBar";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -27,6 +27,7 @@ const MobileContainer = styled(Box)(({isFading}) => ({
     opacity: isFading ? 0 : 1,
     pointerEvents: isFading ? "none" : "auto",
     boxSizing: "border-box",
+    paddingTop: "40px", // Add padding top to create space for the progress bar
 }));
 
 const TitleBox = styled(Box)({
@@ -41,38 +42,32 @@ const TitleBox = styled(Box)({
 });
 
 const FullWidthButton = styled(Button)({
-  backgroundColor: "#e67e22",
-  color: "#ffffff",
-  width: 'calc(100%)',
-  "&:hover": {
-    backgroundColor: "#d35400",
-  },
-  padding: "15px 25px",
-  marginBottom: "30px",
-  boxSizing: "border-box",
-  alignSelf: "center",
-  marginTop: "15em",
+    backgroundColor: "#fab613",
+    color: "#000",
+    width: "calc(100%)",
+    fontWeight: "bold",
+    "&:hover": {
+        backgroundColor: "#d35400",
+    },
+    padding: "15px 25px",
+    marginBottom: "30px",
+    boxSizing: "border-box",
+    alignSelf: "center",
+    marginTop: "15em",
 });
-
 
 const ProgressContainer = styled(Box)({
     display: "flex",
     width: "100%",
     padding: "0 10px",
     boxSizing: "border-box",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "5px",
-    backgroundColor: "transparent",
-    zIndex: 1001,
     justifyContent: "space-between",
+    marginBottom: "20px", // Add margin bottom to create space between progress bar and content
 });
 
 const ProgressBarSection = styled(Box)(({completed}) => ({
     flex: 1,
-    height: "100%",
+    height: "5px", // Set height here
     margin: "0 2px",
     backgroundColor: "#ddd",
     borderRadius: "2px",
@@ -82,34 +77,11 @@ const ProgressBarSection = styled(Box)(({completed}) => ({
         display: "block",
         height: "100%",
         width: `${completed}%`,
-        backgroundColor: "#e67e22",
+        backgroundColor: "#fab613",
         borderRadius: "2px",
         transition: "width 0.5s ease-out",
     },
 }));
-
-const AnimatedArrow = styled(ArrowDownwardIcon)({
-  fontSize: 50,
-  color: "#e67e22",
-  transform: "rotate(-90deg)", // Rotate to point to the right
-  animation: "smoothBounce 2s infinite",
-  "@keyframes smoothBounce": {
-    "0%, 20%, 50%, 80%, 100%": {
-      transform: "rotate(-90deg) translateX(0)",
-    },
-    "40%": {
-      transform: "rotate(-90deg) translateX(10px)",
-    },
-    "60%": {
-      transform: "rotate(-90deg) translateX(5px)",
-    },
-  },
-  cursor: "pointer",
-});
-
-
-
-
 
 const MobileControls = ({fetchPubs}) => {
     const [isFading, setIsFading] = useState(false);
@@ -167,7 +139,7 @@ const MobileControls = ({fetchPubs}) => {
                 <div>
                     <TitleBox>
                         <Typography variant="h4" gutterBottom>
-                            Welcome to <b style={{color:"#e67e22"}}>PINTS!</b>
+                            Welcome to <b style={{color: "#fab613"}}>PINTS!</b>
                         </Typography>
                         <Typography
                             variant="body1"
@@ -178,41 +150,38 @@ const MobileControls = ({fetchPubs}) => {
                             paragraph
                         >
                             <b>PINTS</b> is your trusty companion for finding the best pub deals around you! If you're
-                            in Central London, simply share your location, and PINTS will pinpoint the three cheapest
-                            pints in your vicinity. Whether you're exploring a new part of town or enjoying a night out
-                            in your favorite area, PINTS ensures you always get the best value for your pint. Discover
-                            great pubs and save money with PINTS – cheers to that!
+                            in Central London, simply share your location, and <b>PINTS</b> will pinpoint the three
+                            cheapest pints in your area. Whether you're exploring a new part of town or enjoying a night
+                            out in your favorite area, <b>PINTS</b> ensures you always get the best value for your pint.
+                            Discover great pubs and save money with <b>PINTS</b> – cheers to that!
                         </Typography>
-                        <AnimatedArrow onClick={() => sliderRef.current.slickNext()} />
                     </TitleBox>
                 </div>
                 <div>
                     <TitleBox>
-                        <LocationOnIcon style={{fontSize: 50, color: "#e67e22"}} />
+                        <LocationOnIcon style={{fontSize: 50, color: "#fab613"}} />
                         <Typography variant="h4" gutterBottom>
                             Share Your Location
                         </Typography>
                         <Typography variant="body1" paragraph>
                             Enable location services so we can find the best pub deals near you.
                         </Typography>
-                        <AnimatedArrow onClick={() => sliderRef.current.slickNext()} />
                     </TitleBox>
                 </div>
                 <div>
                     <TitleBox>
-                        <LocalBarIcon style={{fontSize: 50, color: "#e67e22"}} />
+                        <LocalBarIcon style={{fontSize: 50, color: "#fab613"}} />
                         <Typography variant="h4" gutterBottom>
                             Find Pubs
                         </Typography>
                         <Typography variant="body1" paragraph>
                             Discover great pubs around you with the best deals on drinks.
                         </Typography>
-                        <AnimatedArrow onClick={() => sliderRef.current.slickNext()} />
                     </TitleBox>
                 </div>
                 <div>
                     <TitleBox>
-                        <MoneyOffIcon style={{fontSize: 50, color: "#e67e22"}} />
+                        <MoneyOffIcon style={{fontSize: 50, color: "#fab613"}} />
                         <Typography variant="h4" gutterBottom>
                             Save Money
                         </Typography>
@@ -223,7 +192,6 @@ const MobileControls = ({fetchPubs}) => {
                             Get me to the pub!
                         </FullWidthButton>
                     </TitleBox>
-                   
                 </div>
             </Slider>
         </MobileContainer>

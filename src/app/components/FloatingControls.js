@@ -13,7 +13,7 @@ const FloatingContainer = styled(Box)(({ isFading }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 139, 0.3)', // Very low opacity dark blue
+  backgroundColor: '#ffffff80', // Very low opacity dark blue
   padding: '20px',
   zIndex: 1000,
   borderRadius: '8px',

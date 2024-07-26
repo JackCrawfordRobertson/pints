@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { firestore } from '../config/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import Map from '../src/app/components/Map';
-import FloatingControls from '../src/app/components/FloatingControls';
+import DesktopControls from '../src/app/components/DesktopControls';
 import MobileControls from '../src/app/components/MobileControls';
 import { getDistance } from 'geolib';
 import useWindowSize from '../hooks/useWindowSize';
@@ -101,7 +101,7 @@ const Home = () => {
       {isMobileView ? (
         <MobileControls fetchPubs={fetchPubs} />
       ) : (
-        <FloatingControls fetchPubs={fetchPubs} isLoading={isLoading} />
+        <DesktopControls fetchPubs={fetchPubs} isLoading={isLoading} />
       )}
       <Map pubs={pubs} location={location} />
     </div>

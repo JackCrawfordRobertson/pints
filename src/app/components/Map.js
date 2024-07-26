@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { IconButton } from '@mui/material'; // Import the IconButton component from Material UI
+import HomeIcon from '@mui/icons-material/Home'; // Import the Home icon from Material UI
 import styles from '../styles/Map.module.css'; // Import the CSS module
 import SlideUpPanel from './SlideUpPanel'; // Import the SlideUpPanel component
 
@@ -31,7 +33,7 @@ const Map = ({ pubs, location }) => {
       if (userMarker.current) {
         userMarker.current.setLngLat([location.longitude, location.latitude]);
       } else {
-        userMarker.current = new mapboxgl.Marker({ color: '#e67e22' })
+        userMarker.current = new mapboxgl.Marker({ color: '#fab613' })
           .setLngLat([location.longitude, location.latitude])
           .addTo(map.current);
       }
@@ -56,7 +58,7 @@ const Map = ({ pubs, location }) => {
             .setLngLat([pub.longitude, pub.latitude])
             .addTo(map.current);
 
-          console.log(`Projected pub on map: ${pub.pub_name || 'Unnamed pub'} at [${pub.latitude}, ${pub.longitude}]`);
+          console.log(`Projected pub on map: ${pub.pub_name || 'Unnamed pub'} at [${pub.latitude, pub.longitude}]`);
 
           // Add click event to open the slide-up panel and center the map on the pub
           marker.getElement().addEventListener('click', () => {
@@ -79,9 +81,32 @@ const Map = ({ pubs, location }) => {
     }
   }, [location, pubs]);
 
+  // Function to refresh the page
+  const handleReset = () => {
+    window.location.reload();
+  };
+
   return (
     <>
-      <div id="map" ref={mapContainer} style={{ width: '100%', height: '100%' }} />
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
+        <IconButton
+          onClick={handleReset}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            left: '10px',
+            zIndex: 1,
+            backgroundColor: '#fab613',
+            color: 'white',
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+          }}
+        >
+          <HomeIcon />
+        </IconButton>
+      </div>
       <SlideUpPanel 
         pub={selectedPub} 
         isVisible={isPanelVisible} 
