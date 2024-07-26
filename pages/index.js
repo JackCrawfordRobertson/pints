@@ -11,11 +11,13 @@ const Home = () => {
   const [location, setLocation] = useState(null);
   const [pubs, setPubs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMobileView, setIsMobileView] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(true); // Default to mobile view
   const size = useWindowSize();
 
   useEffect(() => {
-    setIsMobileView(size.width <= 768);
+    if (size.width > 768) {
+      setIsMobileView(false);
+    }
   }, [size]);
 
   useEffect(() => {
