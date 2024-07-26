@@ -14,12 +14,14 @@ module.exports = {
     return config;
   },
   // Dev server configuration
-  devServer: {
-    https: {
-      key: fs.readFileSync(path.join(__dirname, 'localhost+3-key.pem')),
-      cert: fs.readFileSync(path.join(__dirname, 'localhost+3.pem')),
+  ...(process.env.NODE_ENV === 'development' && {
+    devServer: {
+      https: {
+        key: fs.readFileSync(path.join(__dirname, 'localhost+3-key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'localhost+3.pem')),
+      },
+      host: '192.168.1.10',
+      port: 3000,
     },
-    host: '192.168.1.10',
-    port: 3000,
-  },
+  }),
 };
