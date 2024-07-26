@@ -12,8 +12,8 @@ const PanelContainer = styled(Box)(({ isVisible }) => ({
   bottom: 0,
   left: 0,
   right: 0,
-  backgroundColor: 'rgba(0, 0, 50, 0.8)', // Darker background with low opacity
-  color: '#fff', // White text color
+  backgroundColor: '#f7fbfc', // Darker background with low opacity
+  color: '#000', // White text color
   boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.3)',
   transform: `translateY(${isVisible ? '0' : '100%'})`,
   transition: 'transform 0.3s ease',
@@ -26,8 +26,8 @@ const PanelContainer = styled(Box)(({ isVisible }) => ({
 }));
 
 const StyledButton = styled(Button)({
-  backgroundColor: '#e67e22',
-  color: '#ffffff',
+  backgroundColor: '#fab613',
+  color: '#000000',
   '&:hover': {
     backgroundColor: '#d35400', // Darker shade on hover
   },
@@ -61,24 +61,21 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
   return (
     <PanelContainer isVisible={isVisible}>
       <IconButton onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <CloseIcon style={{ color: '#fff' }} />
+        <CloseIcon style={{ color: '#fab613' }} />
       </IconButton>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom style={{ marginTop:'1em'}}>
         {pub.pub_name}
       </Typography>
       <Typography variant="subtitle1" paragraph>
-        <strong>Pint Type:</strong> {pub.pint_type}
+        <strong style={{color:'#fab613'}}>Pint Type:</strong> {pub.pint_type}
       </Typography>
       <Typography variant="body2" paragraph>
-        <strong>Pint Price:</strong> {pub.pint_price}
-      </Typography>
-      <Typography variant="body2" paragraph>
-        <strong>Location:</strong> {pub.latitude.toFixed(6)}, {pub.longitude.toFixed(6)}
+        <strong style={{color:'#fab613'}}>Pint Price:</strong> {pub.pint_price}
       </Typography>
       <StyledButton 
         variant="contained"
         onClick={handleTakeMeButtonClick}
-        sx={{marginBottom: '1.2rem'}}
+        sx={{marginBottom: '1.2rem', fontWeight: 'bold'}}
       >
         Copy Address
       </StyledButton>

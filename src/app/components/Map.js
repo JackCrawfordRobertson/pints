@@ -1,4 +1,3 @@
-// components/Map.js
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import styles from '../styles/Map.module.css'; // Import the CSS module
@@ -14,18 +13,18 @@ const Map = ({ pubs, location }) => {
   const [isPanelVisible, setPanelVisible] = useState(false);
 
   useEffect(() => {
-    if (map.current) return;
+    if (!mapContainer.current) return;
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/jackrob/clz1ftvj900ju01pc7078frv0",
-      center: [-0.1276, 51.5074], // Center the map on London
-      zoom: 12,
-    });
-  }, []);
+    if (!map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/jackrob/clz2j7ek700mp01r0g23231fm",
+        center: [-0.1276, 51.5074], // Center the map on London
+        zoom: 12,
+      });
+    }
 
-  useEffect(() => {
-    if (map.current && location) {
+    if (location) {
       const bounds = new mapboxgl.LngLatBounds();
 
       // Update or add the user's location marker
@@ -36,7 +35,7 @@ const Map = ({ pubs, location }) => {
           .setLngLat([location.longitude, location.latitude])
           .addTo(map.current);
       }
-      
+
       // Extend bounds with the user's location
       bounds.extend([location.longitude, location.latitude]);
 
@@ -57,10 +56,18 @@ const Map = ({ pubs, location }) => {
             .setLngLat([pub.longitude, pub.latitude])
             .addTo(map.current);
 
-          // Add click event to open the slide-up panel
+          console.log(`Projected pub on map: ${pub.pub_name || 'Unnamed pub'} at [${pub.latitude}, ${pub.longitude}]`);
+
+          // Add click event to open the slide-up panel and center the map on the pub
           marker.getElement().addEventListener('click', () => {
             setSelectedPub(pub);
             setPanelVisible(true);
+            map.current.flyTo({
+              center: [pub.longitude, pub.latitude],
+              zoom: 18, // Adjust the zoom level as needed
+              offset: [0, -window.innerHeight / 4], // Offset to center the marker in the top half of the screen
+              essential: true // This ensures the animation is considered essential with respect to prefers-reduced-motion
+            });
           });
         } else {
           console.warn("Pub missing valid latitude or longitude", pub);

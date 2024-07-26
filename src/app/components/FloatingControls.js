@@ -44,22 +44,37 @@ const StyledButton = styled(Button)({
   padding: '10px 20px',
 });
 
-const FloatingControls = ({ requestLocation }) => {
+const FloatingControls = ({ fetchPubs, isLoading }) => {
   const [isFading, setIsFading] = useState(false);
 
   const handleButtonClick = () => {
     setIsFading(true);
-    // Remove the component from the DOM after the fade-out transition
+    fetchPubs();
     setTimeout(() => {
-      requestLocation();
+      setIsFading(false);
     }, 500); // Match this duration to the CSS transition duration
   };
+
+  if (isLoading) {
+    return (
+      <FloatingContainer>
+        <InnerBox>
+          <Typography variant="h6" gutterBottom>
+            Welcome to Pints!
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary" paragraph>
+            Loading your location...
+          </Typography>
+        </InnerBox>
+      </FloatingContainer>
+    );
+  }
 
   return (
     <FloatingContainer isFading={isFading}>
       <InnerBox>
         <Typography variant="h6" gutterBottom>
-          Welcome to PINTS!
+          Welcome to Pints!
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" paragraph>
           Share your location to see nearby options!
