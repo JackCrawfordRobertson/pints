@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
+  reactStrictMode: true,
   env: {
     REACT_APP_GOOGLE_API_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
   },

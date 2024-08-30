@@ -1,4 +1,5 @@
 // _app.js
+import React from 'react';
 import '../src/app/styles/globals.css'; // Import global styles
 import 'mapbox-gl/dist/mapbox-gl.css'; // Import Mapbox CSS
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
