@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Typography, Box } from "@mui/material";
-import { styled } from "@mui/system"; // Import styled from Material-UI's system
+import { styled } from "@mui/system"; 
 import Slider from "react-slick";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import LocalBarIcon from "@mui/icons-material/LocalBar";
-import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../../../config/firebaseConfig";
 import DateOfBirthPopup from "../../components/DateOfBirthPopup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./MobileControls.css"; // Import the CSS file
+import "./MobileControls.css"; 
 
 const MobileControls = ({ fetchPubs }) => {
   const [isFading, setIsFading] = useState(false);
@@ -31,7 +28,6 @@ const MobileControls = ({ fetchPubs }) => {
 
   const handleButtonClick = () => {
     if (currentSlide === progress.length - 1) {
-      // On the final slide, trigger the fetchPubs() to launch the map
       setIsFading(true);
       setTimeout(() => {
         fetchPubs(); // This will launch the map
@@ -48,6 +44,15 @@ const MobileControls = ({ fetchPubs }) => {
     setCurrentSlide(index);
   };
 
+  const handleTouchEnd = (event) => {
+    const screenWidth = window.innerWidth;
+    const touchX = event.changedTouches[0].clientX;
+    if (isLocked) return;
+    if (touchX > screenWidth / 2) {
+      sliderRef.current.slickNext(); // Only allow forward movement
+    }
+  };
+
   const settings = {
     dots: false,
     infinite: false,
@@ -56,13 +61,35 @@ const MobileControls = ({ fetchPubs }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     beforeChange: (oldIndex, newIndex) => {
-      // Prevent backward movement by comparing indices
       if (newIndex > oldIndex) {
-        handleSlideChange(newIndex);
+        handleSlideChange(newIndex); // Prevent backward movement
       }
     },
   };
 
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      setIsAuthenticated(true);
+      setIsLocked(true);
+      // Ensure the slider goes to the final slide after successful login
+      sliderRef.current.slickGoTo(3);
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Login failed: " + error.message);
+    }
+  };
+
+  const handleDobConfirm = () => {
+    setDobPopupOpen(false);
+    handleLogin();
+    sliderRef.current.slickGoTo(3); // Move to final slide after DOB confirmation
+  };
+
+  if (!isVisible) return null;
+
+  // Progress Bar Container
   const ProgressContainer = styled(Box)({
     display: "flex",
     width: "100%",
@@ -72,6 +99,7 @@ const MobileControls = ({ fetchPubs }) => {
     marginBottom: "20px",
   });
 
+  // Individual Progress Bar Section
   const ProgressBarSection = styled(Box)(({ completed }) => ({
     flex: 1,
     height: "5px",
@@ -91,35 +119,6 @@ const MobileControls = ({ fetchPubs }) => {
       transition: "width 0.5s ease-out", // Smooth animation for progress
     },
   }));
-
-  const handleTouchEnd = (event) => {
-    const screenWidth = window.innerWidth;
-    const touchX = event.changedTouches[0].clientX;
-    if (isLocked) return;
-    if (touchX > screenWidth / 2) {
-      sliderRef.current.slickNext(); // Only allow forward movement
-    }
-  };
-
-  const handleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      setIsAuthenticated(true);
-      setIsLocked(true);
-      sliderRef.current.slickGoTo(3);
-    } catch (error) {
-      console.error("Error logging in:", error);
-      alert("Login failed: " + error.message);
-    }
-  };
-
-  const handleDobConfirm = () => {
-    setDobPopupOpen(false);
-    handleLogin();
-  };
-
-  if (!isVisible) return null;
 
   return (
     <Box
@@ -219,7 +218,6 @@ const MobileControls = ({ fetchPubs }) => {
         )}
       </Slider>
 
-      {/* Bottom Container */}
       <Box className="bottom-container">
         <Button className="bottom-button" variant="contained" onClick={handleButtonClick}>
           {currentSlide === progress.length - 1 ? "Get me to the pub!" : "Next"}
