@@ -29,11 +29,18 @@ const Map = ({ pubs, location }) => {
     if (location) {
       const bounds = new mapboxgl.LngLatBounds();
 
-      // Update or add the user's location marker
+      // Update or add the user's location marker with a custom icon
       if (userMarker.current) {
         userMarker.current.setLngLat([location.longitude, location.latitude]);
       } else {
-        userMarker.current = new mapboxgl.Marker({ color: '#fab613' })
+        const el = document.createElement('div');
+        el.className = styles.customMarker; // Use the CSS module class
+        el.style.backgroundImage = `url(Launch_Images/Pub.svg)`; // Path to your SVG icon
+        el.style.backgroundSize = 'contain'; // Ensure the SVG scales properly
+        el.style.width = '50px'; // Adjust size as needed
+        el.style.height = '50px'; // Adjust size as needed
+
+        userMarker.current = new mapboxgl.Marker(el)
           .setLngLat([location.longitude, location.latitude])
           .addTo(map.current);
       }
@@ -41,24 +48,17 @@ const Map = ({ pubs, location }) => {
       // Extend bounds with the user's location
       bounds.extend([location.longitude, location.latitude]);
 
-      // Add pubs' locations to bounds and create markers with custom SVG icons
+      // Add pubs' locations to bounds and create orange markers for pubs
       pubs.forEach(pub => {
         if (pub.latitude && pub.longitude) {
           bounds.extend([pub.longitude, pub.latitude]);
 
-          // Create a custom HTML element for the marker
-          const el = document.createElement('div');
-          el.className = styles.customMarker; // Use the CSS module class
-          el.style.backgroundImage = `url(/pub.svg)`; // Path to your SVG icon
-          el.style.backgroundSize = 'contain'; // Ensure the SVG scales properly
-          el.style.width = '70px'; // Adjust size as needed
-          el.style.height = '70px'; // Adjust size as needed
-
-          const marker = new mapboxgl.Marker(el)
+          // Create an orange marker for each pub
+          const marker = new mapboxgl.Marker({ color: '#fab613' }) // Orange color
             .setLngLat([pub.longitude, pub.latitude])
             .addTo(map.current);
 
-          console.log(`Projected pub on map: ${pub.pub_name || 'Unnamed pub'} at [${pub.latitude, pub.longitude}]`);
+          console.log(`Projected pub on map: ${pub.pub_name || 'Unnamed pub'} at [${pub.latitude}, ${pub.longitude}]`);
 
           // Add click event to open the slide-up panel and center the map on the pub
           marker.getElement().addEventListener('click', () => {

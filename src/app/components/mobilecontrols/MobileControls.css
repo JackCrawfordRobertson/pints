@@ -1,0 +1,121 @@
+/* MobileControls.css */
+
+.mobile-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fab613;
+    color: #000333;
+    padding: 0px;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out;
+    opacity: 1;
+    pointer-events: auto;
+    box-sizing: border-box;
+    padding-top: 40px;
+  }
+  
+  .title-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Creates space between image and text */
+    align-items: center; /* Center the image and text horizontally */
+    height: 100%; /* Full height */
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: left; /* Center text alignment */
+}
+  
+  .bottom-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    z-index: 1100;
+  }
+
+  /* MobileControls.css */
+.mobile-container {
+  transition: opacity 1s ease-out; /* Smooth fading effect */
+  opacity: 1;
+}
+
+.mobile-container.fading {
+  opacity: 0;
+}
+  
+  .bottom-button {
+    background-color: #fab613; /* Primary color */
+    color: #000; /* Text color */
+    width: calc(100% - 60px);
+    font-weight: bold;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+  }
+  
+  .bottom-button:hover {
+    background-color: #fab613; /* Secondary color (reddish-orange) */
+  }
+
+  .saving-image {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .full-width-button {
+    background-color: #fab513;
+    color: #000;
+    width: calc(100%);
+    font-weight: bold;
+    padding: 15px 25px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    align-self: center;
+    margin-top: 15em;
+  }
+  
+  .progress-container {
+    display: flex;
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .progress-bar-section {
+    flex: 1;
+    height: 5px;
+    margin: 0 2px;
+    border-radius: 2px;
+    background-color: hsl(240, 6%, 26%); /* Darker background for the unfilled section */
+    position: relative;
+    overflow: hidden; /* Ensure the ::after element is clipped when animating */
+  }
+  
+  .progress-bar-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #fab613;  /* Lighter color for the completed section */
+    border-radius: 2px;
+    transition: width 0.5s ease-out;
+    width: var(--completed, 0); /* Animate based on completed percentage */
+  }
+  

@@ -3,7 +3,7 @@ import { firestore } from '../config/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import Map from '../src/app/components/Map';
 import DesktopControls from '../src/app/components/DesktopControls';
-import MobileControls from '../src/app/components/MobileControls';
+import MobileControls from '../src/app/components/mobilecontrols/MobileControls';
 import { getDistance } from 'geolib';
 import useWindowSize from '../hooks/useWindowSize';
 

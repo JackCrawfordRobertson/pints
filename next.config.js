@@ -9,11 +9,19 @@ module.exports = {
   },
   output: 'export',
   distDir: 'out',
+
   // Custom webpack configuration
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Perform customizations to webpack config
+    // Add @svgr/webpack loader to handle SVGs as React components
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
+    // Perform any other customizations to webpack config
     return config;
   },
+
   // Dev server configuration
   ...(process.env.NODE_ENV === 'development' && {
     devServer: {
