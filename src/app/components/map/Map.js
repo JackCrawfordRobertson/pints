@@ -88,8 +88,10 @@ const Map = ({ pubs, location, user }) => { // Pass the user prop here
         <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
         
         {/* Burger Menu Button */}
-        <div style={{ position: 'absolute', bottom: '20px', left: '10px', zIndex: 1 }}>
+        <div style={{ position: 'absolute', top: '0px', left: '0px', zIndex: 1 }}>
+        <div style={{ top: '10px', left: '10px'}}>
           <BurgerMenu user={user} />
+          </div>
         </div>
       </div>
       

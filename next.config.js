@@ -10,25 +10,6 @@ module.exports = {
   output: 'export',
   distDir: 'out',
 
-  // Custom headers for Cross-Origin-Opener-Policy (COOP) and Cross-Origin-Embedder-Policy (COEP)
-  async headers() {
-    return [
-      {
-        source: '/(.*)', // Apply to all routes
-        headers: [
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin', // Ensure the same-origin policy is enforced
-          },
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp', // Requires cooperation from cross-origin resources
-          },
-        ],
-      },
-    ];
-  },
-
   // Custom webpack configuration
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Add @svgr/webpack loader to handle SVGs as React components
