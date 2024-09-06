@@ -85,7 +85,7 @@ const CancelButton = styled(Button)({
     backgroundColor: "#bdbdbd",
   },
   padding: "15px 25px",
-  marginBottom: "30px",
+  marginBottom: "15px",
   boxSizing: "border-box",
   alignSelf: "center",
   borderRadius: "30px", // Rounded corners
@@ -133,7 +133,7 @@ const DateOfBirthPopup = ({ open, onClose, onConfirm }) => {
         <img
           src="/Launch_Images/DoB.svg"
           alt="Saving Icon"
-          style={{ maxWidth: "60%", marginBottom: "2em", marginLeft: "4em" }}
+          style={{ maxWidth: "60%", marginBottom: "1em", marginLeft: "4em" }}
         />
         <Typography variant="h4" gutterBottom>
           Enter Your Year of Birth
@@ -141,7 +141,7 @@ const DateOfBirthPopup = ({ open, onClose, onConfirm }) => {
         <DialogContentText>
           To ensure you are of legal drinking age, please enter your year of birth.
         </DialogContentText>
-        <Box display="flex" justifyContent="center" marginBottom="1em">
+        <Box display="flex" justifyContent="center" >
           <CustomSelect
             value={year}
             onChange={(e) => setYear(e.target.value)}
@@ -157,7 +157,7 @@ const DateOfBirthPopup = ({ open, onClose, onConfirm }) => {
         </Box>
       </ContentWrapper>
       <DialogActions
-        style={{ flexDirection: "column", alignItems: "center", width: "auto", padding: "0 30px 0px" }}
+        style={{ flexDirection: "column", alignItems: "center", width: "auto", padding: "0 30px 0" }}
       >
         <FullWidthButton onClick={handleConfirm}>Confirm</FullWidthButton>
         <CancelButton onClick={onClose}>Cancel</CancelButton>

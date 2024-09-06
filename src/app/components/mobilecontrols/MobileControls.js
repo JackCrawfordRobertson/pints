@@ -148,7 +148,7 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
             <img
               src="/Launch_Images/Welcome.svg"
               alt="Saving Icon"
-              style={{ maxWidth: "80%", marginBottom: "5em" }}
+              style={{ maxWidth: "80%", marginBottom: "3em" }}
             />
             <div>
               <Typography variant="h4" gutterBottom>
@@ -166,7 +166,7 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
             <img
               src="/Launch_Images/Location.svg"
               alt="Saving Icon"
-              style={{ maxWidth: "80%", marginBottom: "5em" }}
+              style={{ maxWidth: "80%", marginBottom: "3em" }}
             />
             <div>
               <Typography variant="h4" gutterBottom>
@@ -183,7 +183,7 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
             <img
               src="/Launch_Images/FindPubs.svg"
               alt="Saving Icon"
-              style={{ maxWidth: "80%", marginBottom: "5em", marginLeft: "1em" }}
+              style={{ maxWidth: "80%", marginBottom: "3em", marginLeft: "1em" }}
             />
             <div>
               <Typography variant="h4" gutterBottom>
@@ -209,7 +209,7 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
                 <img
                   src="/Launch_Images/SaveMoney.svg"
                   alt="Saving Icon"
-                  style={{ maxWidth: "80%", marginBottom: "5em" }}
+                  style={{ maxWidth: "80%", marginBottom: "3em" }}
                 />
                 <div>
                   <Typography variant="h4" gutterBottom>
