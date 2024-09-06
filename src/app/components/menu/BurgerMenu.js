@@ -90,7 +90,7 @@ const BurgerMenu = ({ user }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Buy useEffect a Beer 🍺
+          Buy us a Beer 🍺
         </a>
 
         <div className="menu-footer">
