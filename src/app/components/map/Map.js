@@ -1,13 +1,13 @@
+// Map.js
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { IconButton } from '@mui/material'; // Import the IconButton component from Material UI
-import HomeIcon from '@mui/icons-material/Home'; // Import the Home icon from Material UI
-import styles from '../styles/Map.module.css'; // Import the CSS module
-import SlideUpPanel from './SlideUpPanel'; // Import the SlideUpPanel component
+import styles from '../map/Map.module.css'; // Import the CSS module
+import SlideUpPanel from '../map/SlideUpPanel.js'; // Import the SlideUpPanel component
+import BurgerMenu from '../menu/BurgerMenu'; // Import the new BurgerMenu component
 
 mapboxgl.accessToken = "pk.eyJ1IjoiamFja3JvYiIsImEiOiJjanZ1bDBrdjUxYmgyNGJtczlxdWl3MzRuIn0.qla3sSgkkyxIkbYLvVsceA";
 
-const Map = ({ pubs, location }) => {
+const Map = ({ pubs, location, user }) => { // Pass the user prop here
   const mapContainer = useRef(null);
   const map = useRef(null);
   const userMarker = useRef(null);
@@ -37,8 +37,8 @@ const Map = ({ pubs, location }) => {
         el.className = styles.customMarker; // Use the CSS module class
         el.style.backgroundImage = `url(Launch_Images/Pub.svg)`; // Path to your SVG icon
         el.style.backgroundSize = 'contain'; // Ensure the SVG scales properly
-        el.style.width = '50px'; // Adjust size as needed
-        el.style.height = '50px'; // Adjust size as needed
+        el.style.width = '100px'; // Adjust size as needed
+        el.style.height = '100px'; // Adjust size as needed
 
         userMarker.current = new mapboxgl.Marker(el)
           .setLngLat([location.longitude, location.latitude])
@@ -81,32 +81,19 @@ const Map = ({ pubs, location }) => {
     }
   }, [location, pubs]);
 
-  // Function to refresh the page
-  const handleReset = () => {
-    window.location.reload();
-  };
-
   return (
     <>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {/* Map Component */}
         <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
-        <IconButton
-          onClick={handleReset}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            left: '10px',
-            zIndex: 1,
-            backgroundColor: '#fab613',
-            color: 'white',
-            width: '56px',
-            height: '56px',
-            borderRadius: '50%',
-          }}
-        >
-          <HomeIcon />
-        </IconButton>
+        
+        {/* Burger Menu Button */}
+        <div style={{ position: 'absolute', bottom: '20px', left: '10px', zIndex: 1 }}>
+          <BurgerMenu user={user} />
+        </div>
       </div>
+      
+      {/* Slide-Up Panel */}
       <SlideUpPanel 
         pub={selectedPub} 
         isVisible={isPanelVisible} 
@@ -114,6 +101,6 @@ const Map = ({ pubs, location }) => {
       />
     </>
   );
-};
+}
 
 export default Map;

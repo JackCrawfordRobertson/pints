@@ -7,7 +7,7 @@
     left: 0;
     right: 0;
     background-color: white; /* Background color of the widget */
-    border-radius: 15px; /* Rounded corners */
+    border-radius: 30px; /* Rounded corners */
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for better visibility */
     transform: translateY(100%); /* Start hidden off-screen */

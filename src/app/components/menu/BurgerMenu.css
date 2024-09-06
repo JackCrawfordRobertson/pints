@@ -1,0 +1,93 @@
+/* BurgerMenu.css */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  left: 10px;
+  top: 10px;
+}
+
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  background: #fab613;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+.bm-item {
+  display: inline-block;
+  color: #000333;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+
+.bm-item:hover {
+  color: white;
+}
+
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* User Profile Section */
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  margin-right: 15px;
+}
+
+.user-info {
+  color: #000333;
+}
+
+.pub-goer-title {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.user-name {
+  font-size: 0.9em;
+  margin: 0;
+}
+
+/* Logout button styling */
+.menu-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 1.5em;
+}
+
+.logout-button {
+  background-color: #f8f8f8;
+  color: #000333;
+  border: none;
+  padding: 10px 20px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 30px;
+}
+
+.logout-button:hover {
+  background-color: #e6a80b;
+}

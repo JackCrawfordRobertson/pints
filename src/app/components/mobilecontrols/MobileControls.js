@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Typography, Box } from "@mui/material";
-import { styled } from "@mui/system"; 
+import { styled } from "@mui/system";
 import Slider from "react-slick";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../../../config/firebaseConfig";
-import DateOfBirthPopup from "../../components/DateOfBirthPopup";
+import DateOfBirthPopup from "../../components/mobilecontrols/DateOfBirthPopup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MobileControls.css"; 
 
-const MobileControls = ({ fetchPubs }) => {
+const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
   const [isFading, setIsFading] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState([0, 0, 0, 0]);
   const [dobPopupOpen, setDobPopupOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null); // Store user data after login
   const [isLocked, setIsLocked] = useState(false);
   const sliderRef = useRef(null);
 
@@ -25,6 +26,13 @@ const MobileControls = ({ fetchPubs }) => {
     );
     setProgress(updatedProgress);
   }, [currentSlide]);
+
+  // Ensure the slider moves to the final slide when the user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && sliderRef.current) {
+      sliderRef.current.slickGoTo(4); // Move to final slide (Save Money) after successful authentication
+    }
+  }, [isAuthenticated]);
 
   const handleButtonClick = () => {
     if (currentSlide === progress.length - 1) {
@@ -40,8 +48,23 @@ const MobileControls = ({ fetchPubs }) => {
     }
   };
 
-  const handleSlideChange = (index) => {
-    setCurrentSlide(index);
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user); // Store the authenticated user info
+      setIsAuthenticated(true);
+      setIsLocked(true);
+      onUserAuthenticated(result.user); // Pass user info to parent component (e.g., Home)
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Login failed: " + error.message);
+    }
+  };
+
+  const handleDobConfirm = () => {
+    setDobPopupOpen(false);
+    handleLogin();
   };
 
   const handleTouchEnd = (event) => {
@@ -67,24 +90,8 @@ const MobileControls = ({ fetchPubs }) => {
     },
   };
 
-  const handleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      setIsAuthenticated(true);
-      setIsLocked(true);
-      // Ensure the slider goes to the final slide after successful login
-      sliderRef.current.slickGoTo(3);
-    } catch (error) {
-      console.error("Error logging in:", error);
-      alert("Login failed: " + error.message);
-    }
-  };
-
-  const handleDobConfirm = () => {
-    setDobPopupOpen(false);
-    handleLogin();
-    sliderRef.current.slickGoTo(3); // Move to final slide after DOB confirmation
+  const handleSlideChange = (index) => {
+    setCurrentSlide(index);
   };
 
   if (!isVisible) return null;
@@ -99,7 +106,6 @@ const MobileControls = ({ fetchPubs }) => {
     marginBottom: "20px",
   });
 
-  // Individual Progress Bar Section
   const ProgressBarSection = styled(Box)(({ completed }) => ({
     flex: 1,
     height: "5px",
@@ -125,15 +131,16 @@ const MobileControls = ({ fetchPubs }) => {
       className={`mobile-container ${isFading ? "fading" : ""}`}
       onTouchEnd={handleTouchEnd}
     >
-      <ProgressContainer>
-        {progress.map((completed, index) => (
-          <ProgressBarSection
-            key={index}
-            completed={completed}
-            isLast={index === progress.length - 1}
-          />
-        ))}
-      </ProgressContainer>
+<ProgressContainer>
+  {progress.map((completed, index) => (
+    <ProgressBarSection
+      key={index}
+      completed={completed}
+      // Handle logic with isLast here instead of passing it down
+      style={{ marginRight: index === progress.length - 1 ? 0 : '2px' }}
+    />
+  ))}
+</ProgressContainer>
 
       <Slider {...settings} ref={sliderRef} style={{ width: "100%", height: "100%" }}>
         <div>

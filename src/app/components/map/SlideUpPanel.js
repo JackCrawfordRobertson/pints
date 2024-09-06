@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography, IconButton, Button, TextField } from "@mui/material";
-import { styled } from "@mui/system";
+import React, {useState, useEffect} from "react";
+import {Box, Typography, IconButton, Button, TextField} from "@mui/material";
+import {styled} from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
-import { toast } from "react-toastify";
-import { updateDoc, doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { firestore } from "../../../config/firebaseConfig"; // Adjust the import path if necessary
-import { getAuth } from "firebase/auth";
-import { CSSTransition } from "react-transition-group";
-import { TransitionGroup } from "react-transition-group";
-import "../styles/animations.css"; // Create a CSS file for the animations
+import {toast} from "react-toastify";
+import {updateDoc, doc, setDoc, serverTimestamp} from "firebase/firestore";
+import {firestore} from "../../../../config/firebaseConfig"; // Adjust the import path if necessary
+import {getAuth} from "firebase/auth";
+import {CSSTransition} from "react-transition-group";
+import {TransitionGroup} from "react-transition-group";
+import "../../styles/animations.css"; // Create a CSS file for the animations
 
-const PanelContainer = styled(Box)(({ isVisible }) => ({
+const PanelContainer = styled(Box)(({isVisible}) => ({
     position: "fixed",
     bottom: 0,
     left: 0,
@@ -18,8 +18,8 @@ const PanelContainer = styled(Box)(({ isVisible }) => ({
     backgroundColor: "#f7fbfc",
     color: "#000",
     boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.3)",
-    transform: `translateY(${isVisible ? '0' : '100%'})`,
-    transition: 'transform 0.3s ease',
+    transform: `translateY(${isVisible ? "0" : "100%"})`,
+    transition: "transform 0.3s ease",
     padding: "20px",
     borderTopLeftRadius: "15px",
     borderTopRightRadius: "15px",
@@ -49,37 +49,36 @@ const UpdateButton = styled(Button)({
 });
 
 const StyledTextField = styled(TextField)({
-  "& .MuiInput-underline:before": {
-      borderBottomColor: "gray",
-  },
-  "& .MuiInput-underline:after": {
-      borderBottomColor: "#fab613",
-  },
-  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-      borderBottomColor: "#fab613",
-  },
-  "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-          borderColor: "gray",
-      },
-      "&:hover fieldset": {
-          borderColor: "#fab613",
-      },
-      "&.Mui-focused fieldset": {
-          borderColor: "#fab613",
-      },
-  },
-  "& .MuiFormLabel-root": {
-      color: "gray",
-  },
-  "&:hover .MuiFormLabel-root": {
-      color: "#fab613",
-  },
-  "& .Mui-focused .MuiFormLabel-root": {
-      color: "#fab613",
-  },
+    "& .MuiInput-underline:before": {
+        borderBottomColor: "gray",
+    },
+    "& .MuiInput-underline:after": {
+        borderBottomColor: "#fab613",
+    },
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+        borderBottomColor: "#fab613",
+    },
+    "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+            borderColor: "gray",
+        },
+        "&:hover fieldset": {
+            borderColor: "#fab613",
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "#fab613",
+        },
+    },
+    "& .MuiFormLabel-root": {
+        color: "gray",
+    },
+    "&:hover .MuiFormLabel-root": {
+        color: "#fab613",
+    },
+    "& .Mui-focused .MuiFormLabel-root": {
+        color: "#fab613",
+    },
 });
-
 
 const logPubClick = async (pubId, userId) => {
     try {
@@ -93,7 +92,7 @@ const logPubClick = async (pubId, userId) => {
     }
 };
 
-const SlideUpPanel = ({ pub, isVisible, onClose }) => {
+const SlideUpPanel = ({pub, isVisible, onClose}) => {
     const [updatedData, setUpdatedData] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [showNonEdit, setShowNonEdit] = useState(true);
@@ -112,18 +111,18 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
     const handleTakeMeButtonClick = () => {
         const coords = `${pub.latitude},${pub.longitude}`;
         navigator.clipboard
-            .writeText(coords)
-            .then(() => {
-                toast.success("Address copied to clipboard!");
-            })
-            .catch((err) => {
-                console.error("Failed to copy: ", err);
-                toast.error("Failed to copy address.");
-            });
+        .writeText(coords)
+        .then(() => {
+            toast.success("Address copied to clipboard!");
+        })
+        .catch((err) => {
+            console.error("Failed to copy: ", err);
+            toast.error("Failed to copy address.");
+        });
     };
 
     const handleInputChange = (field, value) => {
-        setUpdatedData((prevData) => ({ ...prevData, [field]: value }));
+        setUpdatedData((prevData) => ({...prevData, [field]: value}));
     };
 
     const handleSaveChanges = async () => {
@@ -166,8 +165,8 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
             {showNonEdit && (
                 <CSSTransition key="nonEdit" timeout={300} classNames="fade">
                     <PanelContainer isVisible={isVisible}>
-                        <IconButton onClick={onClose} style={{ position: "absolute", top: "10px", right: "10px" }}>
-                            <CloseIcon style={{ color: "#fab613" }} />
+                        <IconButton onClick={onClose} style={{position: "absolute", top: "10px", right: "10px"}}>
+                            <CloseIcon style={{color: "#fab613"}} />
                         </IconButton>
                         <Typography
                             variant="h4"
@@ -182,23 +181,26 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
                         >
                             {pub.pint_price}
                         </Typography>
-                        <Typography variant="h6" gutterBottom style={{ marginTop: "1em", textAlign: "center" }}>
+                        <Typography variant="h6" gutterBottom style={{marginTop: "1em", textAlign: "center"}}>
                             {pub.pub_name}
                         </Typography>
                         <Box display="flex" alignItems="center" gap="10px" justifyContent="center">
                             <Typography variant="subtitle1" paragraph>
-                                <strong style={{ color: "#fab613" }}>Pint Type:</strong> {pub.pint_type}
+                                <strong style={{color: "#fab613"}}>Pint Type:</strong> {pub.pint_type}
                             </Typography>
                         </Box>
                         <StyledButton
                             variant="contained"
                             onClick={handleTakeMeButtonClick}
-                            sx={{ marginBottom: "0rem", fontWeight: "bold" }}
+                            sx={{marginBottom: "0rem", fontWeight: "bold", borderRadius: "30px"}}
                         >
                             Copy Address
                         </StyledButton>
                         {user && (
-                            <UpdateButton style={{ marginBottom: "1.5em" }} onClick={handleUpdateClick}>
+                            <UpdateButton
+                                style={{marginBottom: "1.5em", borderRadius: "30px"}}
+                                onClick={handleUpdateClick}
+                            >
                                 Update
                             </UpdateButton>
                         )}
@@ -208,7 +210,6 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
             {showEdit && (
                 <CSSTransition key="edit" timeout={300} classNames="fade">
                     <PanelContainer isVisible={isVisible}>
-                       
                         <StyledTextField
                             label="Pub Name"
                             defaultValue={pub.pub_name}
@@ -227,11 +228,17 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
                             onChange={(e) => handleInputChange("pint_price", e.target.value)}
                             fullWidth
                         />
-                        <Box display="flex" gap="10px" marginTop="10px" justifyContent="center" style={{ width: '100%', marginBottom:'1em' }}>
+                        <Box
+                            display="flex"
+                            gap="10px"
+                            marginTop="10px"
+                            justifyContent="center"
+                            style={{width: "100%", marginBottom: "1em"}}
+                        >
                             <StyledButton
                                 variant="contained"
                                 onClick={handleSaveChanges}
-                                sx={{ fontWeight: "bold", width: "100%" }}
+                                sx={{fontWeight: "bold", width: "100%", borderRadius: "30px"}}
                             >
                                 Save
                             </StyledButton>
@@ -242,8 +249,9 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
                                     fontWeight: "bold",
                                     backgroundColor: "#e0e0e0",
                                     color: "#000",
-                                    "&:hover": { backgroundColor: "#bdbdbd" },
-                                    width: "100%"
+                                    "&:hover": {backgroundColor: "#bdbdbd"},
+                                    width: "100%",
+                                    borderRadius: "30px",
                                 }}
                             >
                                 Cancel
