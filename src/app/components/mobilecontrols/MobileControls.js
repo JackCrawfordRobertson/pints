@@ -8,6 +8,8 @@ import DateOfBirthPopup from "../../components/mobilecontrols/DateOfBirthPopup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./MobileControls.css"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSmileWink } from '@fortawesome/free-solid-svg-icons';
 
 const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
   const [isFading, setIsFading] = useState(false);
@@ -131,16 +133,16 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
       className={`mobile-container ${isFading ? "fading" : ""}`}
       onTouchEnd={handleTouchEnd}
     >
-<ProgressContainer>
-  {progress.map((completed, index) => (
-    <ProgressBarSection
-      key={index}
-      completed={completed}
-      // Handle logic with isLast here instead of passing it down
-      style={{ marginRight: index === progress.length - 1 ? 0 : '2px' }}
-    />
-  ))}
-</ProgressContainer>
+      <ProgressContainer>
+        {progress.map((completed, index) => (
+          <ProgressBarSection
+            key={index}
+            completed={completed}
+            // Handle logic with isLast here instead of passing it down
+            style={{ marginRight: index === progress.length - 1 ? 0 : '2px' }}
+          />
+        ))}
+      </ProgressContainer>
 
       <Slider {...settings} ref={sliderRef} style={{ width: "100%", height: "100%" }}>
         <div>
@@ -191,7 +193,12 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
               </Typography>
               <Typography variant="body1" paragraph>
                 Discover great pubs around you with the best deals on drinks.
+                <Typography variant="body1" >
+
+              <b>Not a weatherspoons <FontAwesomeIcon icon={faSmileWink} /> </b>
               </Typography>
+              </Typography>
+
             </div>
             <Button
               className="full-width-button"

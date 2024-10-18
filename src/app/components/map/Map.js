@@ -2,8 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import styles from '../map/Map.module.css'; // Import the CSS module
-import SlideUpPanel from '../map/SlideUpPanel.js'; // Import the SlideUpPanel component
-import BurgerMenu from '../menu/BurgerMenu'; // Import the new BurgerMenu component
+import SlideUpPanel from '../DataPanel/SlideUpPanel'; // Import the SlideUpPanel component
+import BurgerMenu from '../AboutMenu/BurgerMenu'; // Import the new BurgerMenu component
 
 mapboxgl.accessToken = "pk.eyJ1IjoiamFja3JvYiIsImEiOiJjanZ1bDBrdjUxYmgyNGJtczlxdWl3MzRuIn0.qla3sSgkkyxIkbYLvVsceA";
 

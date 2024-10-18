@@ -1,24 +1,38 @@
-const { createServer } = require('https');
-const { parse } = require('url');
+const express = require('express');
 const next = require('next');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, 'localhost+3-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'localhost+3.pem')),
-};
-
 app.prepare().then(() => {
-  createServer(httpsOptions, (req, res) => {
-    const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
-  }).listen(3000, '192.168.1.189', (err) => {
-    if (err) throw err;
-    console.log('> Ready on https://192.168.1.189:3000');
+  const server = express();
+
+  // Handle all requests
+  server.all('*', (req, res) => {
+    return handle(req, res);
   });
+
+  // Development mode: HTTPS server
+  if (dev) {
+    const httpsOptions = {
+      key: fs.readFileSync(path.join(__dirname, 'localhost+3-key.pem')),
+      cert: fs.readFileSync(path.join(__dirname, 'localhost+3.pem')),
+    };
+
+    https.createServer(httpsOptions, server).listen(3000, 'localhost', (err) => {
+      if (err) throw err;
+      console.log('> Ready on https://localhost:3000');
+    });
+
+  } else {
+    // Production mode: HTTP server
+    server.listen(3000, (err) => {
+      if (err) throw err;
+      console.log('> Ready on http://localhost:3000');
+    });
+  }
 });

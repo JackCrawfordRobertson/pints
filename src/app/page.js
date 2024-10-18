@@ -152,7 +152,7 @@ const Home = () => {
           { latitude: location.latitude, longitude: location.longitude },
           { latitude: pub.latitude, longitude: pub.longitude }
         );
-        return distance <= 1000; // Nearby pubs within 1km
+        return distance <= 5000; // Nearby pubs within 1km
       } else {
         console.warn('Pub has invalid location data: ', pub);
         return false; // Exclude pubs without valid location data

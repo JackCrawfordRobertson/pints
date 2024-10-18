@@ -69,7 +69,6 @@ export const metadata = {
     appleTouchIcon: '/apple-touch-icon.png',
     maskIcon: '/safari-pinned-tab.svg',
   },
-  themeColor: '#fab613',
   manifest: '/site.webmanifest',
   other: {
     'msapplication-TileColor': '#da532c',
@@ -77,6 +76,10 @@ export const metadata = {
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'mobile-web-app-capable': 'yes',
   },
+};
+
+export const viewport = {
+  themeColor: '#fab613', // Move themeColor here
 };
 
 export default function RootLayout({ children }) {
@@ -88,6 +91,8 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        {/* Add viewport meta tags */}
+        <meta name="theme-color" content={viewport.themeColor} />
       </head>
       <body>
         <CustomThemeProvider>
