@@ -5,7 +5,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { CSSTransition } from "react-transition-group";
 
-const PanelContainer = styled(Box)(({ isVisible }) => ({
+const PanelContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isVisible',
+})(({ isVisible }) => ({
   position: "fixed",
   bottom: 0,
   left: 0,
