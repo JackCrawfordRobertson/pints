@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+pub_scraper/serviceAccountKey.json
+
 # next.js
 /.next/
 /out/
