@@ -1,0 +1,7 @@
+.scrollableContent {
+    height: 100vh; /* Full viewport height */
+    overflow-y: scroll; /* Allow vertical scroll only */
+    padding: 20px;
+    background-color: #fab613;
+    color: '#333';
+  }
