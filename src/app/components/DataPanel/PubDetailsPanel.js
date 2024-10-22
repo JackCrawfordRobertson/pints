@@ -6,7 +6,9 @@ import SportsBarIcon from "@mui/icons-material/SportsBar";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { toast } from "react-toastify";
 
-const PanelContainer = styled(Box)(({ isVisible }) => ({
+const PanelContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isVisible', // Ensure isVisible is not passed down
+})(({ isVisible }) => ({
   position: "fixed",
   bottom: 0,
   left: 0,
@@ -87,7 +89,7 @@ const PubDetailsPanel = ({ currentPub, isVisible, onClose, handleUpdateClick, us
       >
         {currentPub.pint_price}
 
-        <div gutterBottom style={{ marginTop: "0.5em", textAlign: "left", fontSize: ".3em" }}>
+        <div style={{ marginTop: "0.5em", textAlign: "left", fontSize: ".3em" }}>
           {currentPub.pub_name}
         </div>
       </div>

@@ -3,10 +3,10 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import PubDetailsPanel from "./PubDetailsPanel";
 import EditPubPanel from "./EditPubPanel";
 import { toast } from "react-toastify";
-import { updateDoc, doc } from "firebase/firestore";
+import { setDoc, updateDoc, doc, serverTimestamp } from "firebase/firestore"; // Ensure serverTimestamp is imported
 import { firestore } from "../../../../config/firebaseConfig";
 import { getAuth } from "firebase/auth";
-import "../../styles/animations.css"; // Ensure you have CSS for transitions
+import "@/app/styles/animations.css"; // Ensure you have CSS for transitions
 
 const SlideUpPanel = ({ pub, isVisible, onClose }) => {
   const [updatedData, setUpdatedData] = useState({});
@@ -15,10 +15,14 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
   const [showEdit, setShowEdit] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
-
   const currentPub = pub;
 
   const logPubClick = async (pubId, userId) => {
+    if (!pubId || !userId) {
+      console.error("pubId or userId is missing");
+      return;
+    }
+  
     try {
       await setDoc(doc(firestore, "pub_clicks", `${userId}_${pubId}`), {
         pubId,
@@ -31,8 +35,10 @@ const SlideUpPanel = ({ pub, isVisible, onClose }) => {
   };
 
   useEffect(() => {
-    if (user && currentPub) {
+    if (user && currentPub?.id) {
       logPubClick(currentPub.id, user.uid);
+    } else {
+      console.error("currentPub.id or user.uid is missing");
     }
   }, [currentPub, user]);
 

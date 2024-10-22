@@ -4,9 +4,11 @@ import { styled } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { CSSTransition } from "react-transition-group";
+import { StyledButton } from "../../ThemeProvider"; // Import the StyledButton component
+import { submitPriceUpdate, checkForMatchingPrices, discardOutdatedPrices } from '../../firebasePubService'; // Make sure the path is correct
 
 const PanelContainer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'isVisible',
+  shouldForwardProp: (prop) => prop !== 'isVisible', // Ensure isVisible is not passed down
 })(({ isVisible }) => ({
   position: "fixed",
   bottom: 0,
@@ -27,6 +29,7 @@ const PanelContainer = styled(Box, {
   overflowY: "auto",
 }));
 
+// Define the missing StyledTextField
 const StyledTextField = styled(TextField)({
   "& .MuiInput-underline:before": {
     borderBottomColor: "gray",
@@ -59,16 +62,6 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const StyledButton = styled(Button)({
-  backgroundColor: "#fab613",
-  color: "#000",
-  "&:hover": {
-    backgroundColor: "#d35400",
-  },
-  marginTop: "auto",
-  borderRadius: "5px",
-});
-
 const EditPubPanel = ({ currentPub, isVisible, handleInputChange, handleSaveChanges, handleCancelClick }) => {
   const [pintPrice, setPintPrice] = useState(currentPub ? parseFloat(currentPub.pint_price.replace('£', '')) : 0);
 
@@ -79,6 +72,19 @@ const EditPubPanel = ({ currentPub, isVisible, handleInputChange, handleSaveChan
     handleInputChange("pint_price", `£${newValue.toFixed(2)}`);
   };
 
+  const handleSavePrice = async () => {
+    try {
+      const pubId = currentPub.id; // Make sure `currentPub` has an ID
+      const userId = "exampleUserId"; // Replace with actual user ID
+      await submitPriceUpdate(pubId, userId, pintPrice);
+      await checkForMatchingPrices(pubId);
+      await discardOutdatedPrices(pubId);
+      handleSaveChanges(); // Call the save changes callback if needed
+    } catch (error) {
+      console.error("Error updating price:", error);
+    }
+  };
+
   return (
     <CSSTransition in={isVisible} timeout={300} classNames="fade" unmountOnExit>
       <PanelContainer isVisible={isVisible}>
@@ -86,7 +92,6 @@ const EditPubPanel = ({ currentPub, isVisible, handleInputChange, handleSaveChan
           <CloseIcon style={{ color: "#fab613" }} />
         </IconButton>
 
-        {/* Pint Price Display */}
         <div
           style={{
             textAlign: "left",
@@ -100,7 +105,6 @@ const EditPubPanel = ({ currentPub, isVisible, handleInputChange, handleSaveChan
         >
           £{pintPrice.toFixed(2)}
         </div>
-
 
         <Box display="flex" alignItems="center" gap="5px" justifyContent="left" style={{ marginBottom: "1em" }}>
           <LocationOnIcon style={{ fontSize: "30px", verticalAlign: "middle", color: "gray" }} />
@@ -137,25 +141,10 @@ const EditPubPanel = ({ currentPub, isVisible, handleInputChange, handleSaveChan
         </Box>
 
         <Box display="flex" gap="10px" marginTop="10px" justifyContent="center" style={{ width: "100%", marginBottom: "1em" }}>
-          <StyledButton
-            variant="contained"
-            onClick={handleSaveChanges}
-            sx={{ fontWeight: "bold", width: "100%", borderRadius: "30px" }}
-          >
+          <StyledButton variant="contained" onClick={handleSavePrice}>
             Save
           </StyledButton>
-          <StyledButton
-            variant="contained"
-            onClick={handleCancelClick}
-            sx={{
-              fontWeight: "bold",
-              backgroundColor: "#e0e0e0",
-              color: "#000",
-              "&:hover": { backgroundColor: "#bdbdbd" },
-              width: "100%",
-              borderRadius: "30px",
-            }}
-          >
+          <StyledButton variant="contained" onClick={handleCancelClick} sx={{ backgroundColor: "#e0e0e0" }}>
             Cancel
           </StyledButton>
         </Box>

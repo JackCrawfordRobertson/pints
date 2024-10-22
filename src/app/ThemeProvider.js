@@ -1,6 +1,18 @@
 'use client';
 
-import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider, CssBaseline, Button } from '@mui/material';
+import { styled } from '@mui/system';
+
+// Create a custom styled button using the theme colors
+export const StyledButton = styled(Button)({
+  backgroundColor: '#333', // Default background color from primary.main
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#fab613', // Hover background color from secondary.main
+    boxShadow: 'none', // No shadow on hover
+  },
+  borderRadius: '5px', // Example button styling
+});
 
 const theme = createTheme({
   palette: {

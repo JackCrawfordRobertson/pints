@@ -22,12 +22,12 @@ const AboutPopup = ({ onClose }) => {
     <Dialog open={true} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>About PINTS</DialogTitle>
       <DialogContent>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" >
           <strong>PINTS</strong> is your trusty companion for discovering the best pub deals around you.
           Whether you're looking for discounted drinks, a great atmosphere, or a place to catch up with friends,
           PINTS helps you find the perfect spot.
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" >
           With real-time pub data and special offers, PINTS ensures that you make the most of your night out.
           Save money while enjoying good times at the best pubs near you.
         </Typography>
