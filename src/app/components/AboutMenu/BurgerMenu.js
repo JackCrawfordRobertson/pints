@@ -93,6 +93,24 @@ const BurgerMenu = ({ user }) => {
           Buy us a Beer 🍺
         </a>
 
+        <a
+          className="menu-item"
+          href="/terms-and-conditions"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Terms and Conditions
+        </a>
+
+        <a
+          className="menu-item"
+          href="/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Privacy Policy
+        </a>
+
         <div className="menu-footer">
           <button onClick={handleLogout} className="logout-button">
             Logout
