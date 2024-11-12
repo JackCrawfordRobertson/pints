@@ -195,7 +195,7 @@ const MobileControls = ({ fetchPubs, onUserAuthenticated }) => {
                 Discover great pubs around you with the best deals on drinks.
                 <Typography variant="body1" >
 
-              <b>Not a Weatherspoons <FontAwesomeIcon icon={faSmileWink} /> </b>
+              <b>Not a Weatherspoons <FontAwesomeIcon icon={faSmileWink} /></b>
               </Typography>
               </Typography>
 
